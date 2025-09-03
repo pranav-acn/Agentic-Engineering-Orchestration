@@ -1,9 +1,9 @@
 const cacheName = "Accenture-Agentic Engineering Orchestration-1.0.0";
 const contentToCache = [
-    "Build/Web Build v.9.loader.js",
-    "Build/Web Build v.9.framework.js",
-    "Build/Web Build v.9.data",
-    "Build/Web Build v.9.wasm",
+    "Build/Web Build v.11.loader.js",
+    "Build/Web Build v.11.framework.js",
+    "Build/Web Build v.11.data",
+    "Build/Web Build v.11.wasm",
     "TemplateData/style.css"
 
 ];
