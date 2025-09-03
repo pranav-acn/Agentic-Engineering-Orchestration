@@ -9,6 +9,22 @@
     <link rel="manifest" href="manifest.webmanifest">
   </head>
   <body>
+<script>
+(async function devCacheBust(){
+  try{
+    if('serviceWorker' in navigator){
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for(const r of regs) await r.unregister();
+    }
+    if(window.caches){
+      const keys = await caches.keys();
+      for(const k of keys) await caches.delete(k);
+    }
+    const v = Date.now();
+    window.__unityCacheBust = s => s + (s.includes('?') ? '&' : '?') + 'v=' + v;
+  }catch(e){}
+})();
+</script>
     <div id="unity-container">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -22,7 +38,7 @@
     <script>
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("ServiceWorker.js");
+          /* SW disabled by postprocess */ void 0;
         }
       });
 
@@ -57,12 +73,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Web Build v.7.loader.js";
+      var loaderUrl = window.__unityCacheBust(buildUrl + "/Web Build v.8.loader.js");
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/Web Build v.7.data",
-        frameworkUrl: buildUrl + "/Web Build v.7.framework.js",
-        codeUrl: buildUrl + "/Web Build v.7.wasm",
+        dataUrl:  window.__unityCacheBust(buildUrl + "/Web Build v.8.data"),
+        frameworkUrl:  window.__unityCacheBust(buildUrl + "/Web Build v.8.framework.js"),
+        codeUrl:  window.__unityCacheBust(buildUrl + "/Web Build v.8.wasm"),
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Accenture",
         productName: "Agentic Engineering Orchestration",
